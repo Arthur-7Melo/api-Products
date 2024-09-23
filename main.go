@@ -5,6 +5,7 @@ import (
 
 	"github.com/Arthur-7Melo/api-Products.git/controller"
 	"github.com/Arthur-7Melo/api-Products.git/db"
+	"github.com/Arthur-7Melo/api-Products.git/repository"
 	"github.com/Arthur-7Melo/api-Products.git/usecase"
 	"github.com/gin-gonic/gin"
 )
@@ -14,8 +15,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
-	productUseCase := usecase.NewProductUseCase()
+	productRepository := repository.NewProductRepository(dbConnection)
+	productUseCase := usecase.NewProductUseCase(productRepository)
 	productController := controller.NewProductController(productUseCase)
 
 	router := gin.Default()
