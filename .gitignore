@@ -1,0 +1,17 @@
+# Compiled object files
+*.o
+*.a
+*.so
+
+# Executables
+*.exe
+*.out
+*.dll
+
+# Test binary, coverage, and benchmarks
+*.test
+*.coverprofile
+*.bench
+
+# Environment files
+.env
