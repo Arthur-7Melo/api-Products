@@ -11,14 +11,11 @@ type productUseCase struct{
 
 type ProductUseCase interface{
 	GetProducts() ([]model.Product, error)
+	CreateProduct(product model.Product) (model.Product, error)
 }
 
 func NewProductUseCase(repository repository.ProductRepository) ProductUseCase {
 	return &productUseCase{
 		repository: repository,
 	}
-}
-
-func(pu *productUseCase) GetProducts() ([]model.Product, error) {
-	return pu.repository.GetProducts()
 }
