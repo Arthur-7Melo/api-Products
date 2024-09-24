@@ -26,6 +26,9 @@ func main() {
 		})
 	})
 
+	// Rotas da API
 	router.GET("/products", productController.GetProducts)
+	router.POST("/product", productController.CreateProduct)
+
 	router.Run(":8000")
 }
