@@ -1,8 +1,6 @@
 package main
 
 import (
-	"net/http"
-
 	"github.com/Arthur-7Melo/api-Products.git/controller"
 	"github.com/Arthur-7Melo/api-Products.git/db"
 	"github.com/Arthur-7Melo/api-Products.git/repository"
@@ -20,15 +18,10 @@ func main() {
 	productController := controller.NewProductController(productUseCase)
 
 	router := gin.Default()
-	router.GET("/ping", func(ctx *gin.Context){
-		ctx.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
-
 	// Rotas da API
 	router.GET("/products", productController.GetProducts)
 	router.POST("/product", productController.CreateProduct)
+	router.GET("/product/:productId", productController.GetProductById)
 
 	router.Run(":8000")
 }

@@ -12,6 +12,7 @@ type productUseCase struct{
 type ProductUseCase interface{
 	GetProducts() ([]model.Product, error)
 	CreateProduct(product model.Product) (model.Product, error)
+	GetProductById(id_product int) (*model.Product, error)
 }
 
 func NewProductUseCase(repository repository.ProductRepository) ProductUseCase {

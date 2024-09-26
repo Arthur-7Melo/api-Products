@@ -12,6 +12,7 @@ type productController struct{
 type ProductController interface{
 	GetProducts(*gin.Context)
 	CreateProduct(ctx *gin.Context)
+	GetProductById(ctx *gin.Context)
 }
 
 func NewProductController(usecase usecase.ProductUseCase) ProductController {
