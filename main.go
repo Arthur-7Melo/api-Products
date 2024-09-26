@@ -4,6 +4,7 @@ import (
 	"github.com/Arthur-7Melo/api-Products.git/controller"
 	"github.com/Arthur-7Melo/api-Products.git/db"
 	"github.com/Arthur-7Melo/api-Products.git/repository"
+	"github.com/Arthur-7Melo/api-Products.git/routes"
 	"github.com/Arthur-7Melo/api-Products.git/usecase"
 	"github.com/gin-gonic/gin"
 )
@@ -18,11 +19,6 @@ func main() {
 	productController := controller.NewProductController(productUseCase)
 
 	router := gin.Default()
-	// Rotas da API
-	router.GET("/products", productController.GetProducts)
-	router.POST("/product", productController.CreateProduct)
-	router.GET("/product/:productId", productController.GetProductById)
-	router.DELETE("/product/:productId", productController.DeleteProduct)
-
+	routes.InitProductRoutes(router, productController)
 	router.Run(":8000")
 }
