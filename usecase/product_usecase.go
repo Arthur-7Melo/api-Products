@@ -13,6 +13,7 @@ type ProductUseCase interface{
 	GetProducts() ([]model.Product, error)
 	CreateProduct(product model.Product) (model.Product, error)
 	GetProductById(id_product int) (*model.Product, error)
+	DeleteProduct(id_product int) error
 }
 
 func NewProductUseCase(repository repository.ProductRepository) ProductUseCase {

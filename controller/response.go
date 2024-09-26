@@ -1,5 +1,5 @@
 package controller
 
 type Response struct {
-	Message string
+	Message string `json:"message"`
 }
