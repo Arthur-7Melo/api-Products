@@ -9,6 +9,14 @@ import (
 
 func (pc *productController) DeleteProduct(ctx *gin.Context) {
 	productId := ctx.Param("productId")
+	if productId == "" {
+		response := Response{
+			Message: "Id do produto não pode ser nulo",
+		}
+		ctx.JSON(http.StatusBadRequest, response)
+		return
+	}
+	
 	id, err := strconv.Atoi(productId)
 	if err != nil || id <= 0{
 		response := Response{
@@ -26,8 +34,7 @@ func (pc *productController) DeleteProduct(ctx *gin.Context) {
 		return
 	}
 
-	response := Response{
+	ctx.JSON(http.StatusOK, Response{
 		Message: "Produto excluído com Sucesso!",
-	}
-	ctx.JSON(http.StatusOK, response)
+	})
 }

@@ -14,6 +14,7 @@ type ProductController interface{
 	CreateProduct(ctx *gin.Context)
 	GetProductById(ctx *gin.Context)
 	DeleteProduct(ctx *gin.Context)
+	UpdateProduct(ctx *gin.Context)
 }
 
 func NewProductController(usecase usecase.ProductUseCase) ProductController {

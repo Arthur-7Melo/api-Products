@@ -14,6 +14,7 @@ type ProductUseCase interface{
 	CreateProduct(product model.Product) (model.Product, error)
 	GetProductById(id_product int) (*model.Product, error)
 	DeleteProduct(id_product int) error
+	UpdateProduct(product model.Product) error
 }
 
 func NewProductUseCase(repository repository.ProductRepository) ProductUseCase {

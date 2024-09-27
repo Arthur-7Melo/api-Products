@@ -15,6 +15,7 @@ type ProductRepository interface{
 	CreateProduct(product model.Product) (*int, error)
 	GetProductById(id_product int) (*model.Product, error)
 	DeleteProduct(id_product int) error
+	UpdateProduct(product model.Product) error
 }
 
 func NewProductRepository(connection *sql.DB) ProductRepository {
