@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/Arthur-7Melo/api-Products.git/config/logger"
 	"github.com/Arthur-7Melo/api-Products.git/controller"
 	"github.com/Arthur-7Melo/api-Products.git/db"
 	"github.com/Arthur-7Melo/api-Products.git/repository"
@@ -10,6 +11,7 @@ import (
 )
 
 func main() {
+	logger.Info("Iniciando api Produtos")
 	dbConnection, err := db.ConnectDB()
 	if err != nil {
 		panic(err)
