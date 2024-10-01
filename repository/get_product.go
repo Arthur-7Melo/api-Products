@@ -2,15 +2,15 @@ package repository
 
 import (
 	"database/sql"
-	"fmt"
 
+	"github.com/Arthur-7Melo/api-Products.git/config/logger"
 	"github.com/Arthur-7Melo/api-Products.git/model"
 )
 
 func (pr *productRepository) GetProductById(id_product int) (*model.Product, error) {
 	query, err := pr.connection.Prepare("SELECT * FROM product WHERE id = $1")
 	if err != nil {
-		fmt.Println(err)
+		logger.Error("Erro ao preparar a query do GetProduct", err)
 		return nil, err
 	}
 
@@ -22,11 +22,14 @@ func (pr *productRepository) GetProductById(id_product int) (*model.Product, err
 		&product.Categorie)
 	if err != nil {
 		if err == sql.ErrNoRows {
+			logger.Info("Produto não encontrado no GetProduct")
 			return nil, nil
 		}
+			logger.Error("Erro ao executar query do GetProduct", err)
 			return nil, err
 	}
 		
 	query.Close()
+	logger.Info("GetProduct concluído com sucesso")
 	return &product, nil
 }
