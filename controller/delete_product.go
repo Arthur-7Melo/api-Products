@@ -4,33 +4,22 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/Arthur-7Melo/api-Products.git/config"
 	"github.com/gin-gonic/gin"
 )
 
 func (pc *productController) DeleteProduct(ctx *gin.Context) {
 	productId := ctx.Param("productId")
-	if productId == "" {
-		response := Response{
-			Message: "Id do produto não pode ser nulo",
-		}
-		ctx.JSON(http.StatusBadRequest, response)
-		return
-	}
-	
 	id, err := strconv.Atoi(productId)
 	if err != nil || id <= 0{
-		response := Response{
-			Message: "Produto não encontrado para o Id informado. Id precisa ser um número maior que 0",
-		}
-		ctx.JSON(http.StatusBadRequest, response)
+		productErr := config.NewBadRequestError("Id do produto precisa ser um número maior que 0!")
+		ctx.JSON(productErr.Code, productErr)
 		return
 	}
 
 	if err = pc.productUseCase.DeleteProduct(id); err != nil {
-		response := Response{
-			Message: "Erro ao excluir o produto",
-		}
-		ctx.JSON(http.StatusInternalServerError, response)
+		productErr := config.NewInternalServerError("Erro ao excluir o produto!")
+		ctx.JSON(productErr.Code, productErr)
 		return
 	}
 

@@ -4,39 +4,29 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/Arthur-7Melo/api-Products.git/config"
 	"github.com/gin-gonic/gin"
 )
 
 func (pc *productController) GetProductById(ctx *gin.Context) {
 	id := ctx.Param("productId")
-	if id == "" {
-		response := Response{
-			Message: "Id do produto não pode ser nulo",
-		}
-		ctx.JSON(http.StatusBadRequest, response)
-		return
-	}
-
 	productId, err := strconv.Atoi(id)
 	if err != nil {
-		response := Response{
-			Message: "Id do produto precisa ser um número!",
-		}
-		ctx.JSON(http.StatusBadRequest, response)
+		productErr := config.NewBadRequestError("Id do produto precisa ser um número maior que 0!")
+		ctx.JSON(productErr.Code, productErr)
 		return
 	}
 
 	product, err := pc.productUseCase.GetProductById(productId)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err)
+		productErr := config.NewInternalServerError("Erro ao consultar o produto na base de dados")
+		ctx.JSON(productErr.Code, productErr)
 		return
 	}
 
 	if product == nil {
-		response := Response{
-			Message: "Produto não encontrado na base de dados!",
-		}
-		ctx.JSON(http.StatusNotFound, response)
+		productErr := config.NewNotFoundError("Produto não encontrado na base de dados")
+		ctx.JSON(productErr.Code, productErr)
 		return
 	}
 

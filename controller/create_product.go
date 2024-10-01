@@ -18,7 +18,9 @@ func (pc *productController) CreateProduct(ctx *gin.Context) {
 
 	insertedProduct, err := pc.productUseCase.CreateProduct(product)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, err)
+		productErr := config.NewInternalServerError(
+			"Erro ao criar o produto na base de dados")
+		ctx.JSON(productErr.Code, productErr)
 		return
 	}
 
