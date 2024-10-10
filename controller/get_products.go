@@ -14,6 +14,7 @@ func (pc *productController) GetProducts(ctx *gin.Context) {
 		logger.Error("Erro ao retornar os produtos da base de dados!", err)
 		productErr := config.NewInternalServerError("Erro ao buscar os produtos na base de dados")
 		ctx.JSON(productErr.Code, productErr)
+		return
 	}
 
 	logger.Info("GetProducts concluído com Sucesso!")

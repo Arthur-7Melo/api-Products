@@ -1,11 +1,13 @@
 package usecase
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/Arthur-7Melo/api-Products.git/config/logger"
 	"github.com/Arthur-7Melo/api-Products.git/model"
 )
+
+var errProductNotFound = errors.New("produto não encontrado na base de dados")
 
 func (pu *productUseCase) UpdateProduct(product model.Product) error {
 	logger.Info("Iniciado UpdateProduct useCase")
@@ -17,7 +19,7 @@ func (pu *productUseCase) UpdateProduct(product model.Product) error {
 	}
 
 	if productExist == nil {
-		return fmt.Errorf("produto não encontrado na base de dados")
+		return errProductNotFound
 	}
 
 	logger.Info("Update Product useCase concluído com sucesso")

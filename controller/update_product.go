@@ -32,7 +32,7 @@ func (pc *productController) UpdateProduct(ctx *gin.Context) {
 
 	product.Id = id
 	if err = pc.productUseCase.UpdateProduct(product); err != nil{
-		if err.Error() == "Produto não encontrado na base de dados!" {
+		if err.Error() == "produto não encontrado na base de dados" {
 			logger.Error("Error produto Not Found", err)
 			productErr := config.NewNotFoundError(err.Error())
 			ctx.JSON(productErr.Code, productErr)
