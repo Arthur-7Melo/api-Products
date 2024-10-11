@@ -59,7 +59,33 @@ func TestDeleteProduct_ErrorID(t *testing.T) {
 	assert.Contains(t, recorder.Body.String(), "Id do produto precisa ser um número maior que 0")
 }
 
-func TestDeleteProductErro(t *testing.T) {
+func TestDeleteProduct_NotFound(t *testing.T){
+	gin.SetMode(gin.TestMode)
+
+	mockUseCase := &mocks.MockProductUseCase{
+		DeleteProductFunc: func(id_product int) error {
+			return errors.New("produto não encontrado na base de dados")
+		},
+	}
+
+	pc := controller.NewProductController(mockUseCase)
+
+	productId := "1"
+	req, err := http.NewRequest(http.MethodDelete, "/product/"+productId, nil)
+	assert.NoError(t, err)
+
+	recorder := httptest.NewRecorder()
+	ctx, _ := gin.CreateTestContext(recorder)
+	ctx.Params = gin.Params{{Key: "productId", Value: productId}}
+	ctx.Request = req
+
+	pc.DeleteProduct(ctx)
+
+	assert.Equal(t, http.StatusNotFound, recorder.Code)
+	assert.Contains(t, recorder.Body.String(), "produto não encontrado na base de dados")
+}
+
+func TestDeleteProductError(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 	errDelete := errors.New("erro ao excluir produto")
 

@@ -20,6 +20,12 @@ func (pc *productController) DeleteProduct(ctx *gin.Context) {
 	}
 
 	if err = pc.productUseCase.DeleteProduct(id); err != nil {
+		if err.Error() == "produto não encontrado na base de dados" {
+			logger.Error("Error produto not found", err)
+			productErr := config.NewNotFoundError(err.Error())
+			ctx.JSON(productErr.Code, productErr)
+			return
+		}
 		logger.Error("Erro ao excluir o produto!", err)
 		productErr := config.NewInternalServerError("Erro ao excluir o produto!")
 		ctx.JSON(productErr.Code, productErr)

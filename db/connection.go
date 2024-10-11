@@ -9,6 +9,8 @@ import (
 	"go.uber.org/zap"
 )
 
+var SqlOpen = sql.Open
+
 const (
 	host     = "go_db"
 	port     = 5432
@@ -22,7 +24,7 @@ func ConnectDB() (*sql.DB, error) {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 	host, port, user, password, dbname)
 
-	db,err := sql.Open("postgres", psqlInfo)
+	db,err := SqlOpen("postgres", psqlInfo)
 	if err != nil {
 		logger.Error("Erro ao abrir conexão com o banco de dados", err)
 		return nil, err
